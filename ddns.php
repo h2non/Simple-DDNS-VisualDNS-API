@@ -6,8 +6,9 @@
  * @description Simple DDNS web based keeping update the main domain type 'A' with the current host WAN IP
  * @author      Tomas Aparicio <tomas@rijndael-project.com>
  * @license     GNU GPL 3.0
- * @version     0.1.1b revision 11
- * @see         README.md
+ * @version     0.1.2 beta revision 16
+ * @see         README.md for how to usage
+ * @api		https://visualdns.net/api-documentation
  *
  * Copyright (C) 2011 Tomas Aparicio <tomas@rijndael-project.com>
  *
@@ -27,11 +28,18 @@
  */
 
 // set yout visuanDNS API key
-$API='-set-your-api-key-here';
+$API='set-your-api-key-here';
 
 date_default_timezone_set('Europe/Madrid');
 $date = date('Y-m-d H:i');
-$IPversion = 4;
+$IP = 4; // define the IP protocol version - v6 coming soon
+
+// list of domains activated to update
+$domains = array (
+	'example.com',
+	'example.org'
+	// add more here like array index
+);
 
 try {
 
@@ -55,7 +63,7 @@ try {
         $current = trim($current[0][0]);
 
         // check valid IPv4
-        if ($IPversion == 4)
+        if ($IP == 4)
         {
                 if (ip2long($current) === false) die ( $date . ' - ERROR : the current IPv4 addess is invalid. Check if the returned IP from http://checkip.dyndns.org is valid.');
         }
@@ -90,7 +98,11 @@ try {
                 foreach ($domains as $i => $value)
                 {
                         $host = $value['name'];
-                        sleep(1);
+			// search if should update the current domain @see $domains
+                        if (!array_key_exists($host,$domains)) break;
+
+			// if exists proceed to update
+			sleep(1);
 
                         try {
                                 // Get records for specified domain
@@ -102,6 +114,8 @@ try {
 
                         foreach ($records as $x => $name)
                         {
+				// by default only update the A type registry for the literal domain host
+				// improve it according to your needs
                                 if (trim($name['name']) == $host && trim($name['type']) == 'A') {
                                         $id = (int)$name['id'];
                                         $type = $name['type'];
