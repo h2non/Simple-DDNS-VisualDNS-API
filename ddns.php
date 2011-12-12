@@ -41,6 +41,11 @@ $domains = array (
 	// add more here like array index
 );
 
+if (!class_exists('SoapClient'))
+{
+	die("Your PHP version seem doesn't SOAP support. Please, install the SOAP extension and try again.\n");
+}
+
 try {
 
         // implemented for checkip from DynDNS web service
