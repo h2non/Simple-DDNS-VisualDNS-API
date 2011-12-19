@@ -1,7 +1,7 @@
 # Simple DDNS PHP script for VisualDNS WS SOAP based API
 
 ## ABOUT
-This is a very simple PHP based script to implement and easy "DDNS" for VisualDNS.net over SOAP API Web Service.
+This is a very simple PHP based script to implement and easy "DDNS" for VisualDNS.net via SOAP API Web Service.
 Your PHP version need SOAP support. 
 Feel free to adapt it for any purpouses.
 
