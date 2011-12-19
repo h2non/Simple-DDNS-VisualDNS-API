@@ -14,7 +14,7 @@ $ chmod +x ddns.php
 4. Run 
 $ ./ddns.php >> /var/log/ddns.log
 
-Also you can automatize it adding this job to crontab (e.g running it each hour)
+Also you can automatize it adding this job to the crontab (e.g running it each hour)
 $ crontab -e
 Add the following line:
 1 * * * * /ddns.php >> /var/log/ddns.log
