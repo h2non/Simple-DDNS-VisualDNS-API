@@ -3,7 +3,7 @@
 ## ABOUT
 This is a very simple PHP based script to implement and easy "DDNS" for VisualDNS.net via SOAP API Web Service.
 Your PHP version need SOAP support. 
-Feel free to adapt it for any purpouses.
+Feel free to improve it for any purpouses.
 
 ## USAGE
 
