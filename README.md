@@ -1,12 +1,11 @@
-
 # Simple DDNS PHP script for VisualDNS WS SOAP based API
 
-# ABOUT
+## ABOUT
 This is a very simple PHP based script to implement and easy "DDNS" for VisualDNS.net over SOAP API Web Service.
 Your PHP version need SOAP support. 
 Feel free to adapt it for any purpouses.
 
-# USAGE
+## USAGE
 
 1. Register and get your API key from visualdns.net
 2. Edit ddns.php file and define your API key hash.
@@ -20,8 +19,7 @@ $ crontab -e
 Add the following line:
 1 * * * * /ddns.php >> /var/log/ddns.log
 
-
-# LICENSE
+## LICENSE
 
 GNU GPL 3.0
 
