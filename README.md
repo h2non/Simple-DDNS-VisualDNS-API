@@ -23,7 +23,7 @@ $ crontab -e
 And add the following line:
 
 ```
-1 * * * * /ddns.php >> /var/log/ddns.log
+1 * * * * /path/to/file/ddns.php >> /var/log/ddns.log
 ``` 
 
 The output will be stored in `/var/log/ddns.log`
