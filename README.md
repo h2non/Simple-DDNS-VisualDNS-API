@@ -18,7 +18,11 @@ Also you can automatize it adding this job to the crontab (e.g running it each h
 
 ```
 $ crontab -e
-Add the following line:
+```
+
+And add the following line:
+
+```
 1 * * * * /ddns.php >> /var/log/ddns.log
 ``` 
 
