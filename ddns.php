@@ -6,7 +6,7 @@
  * @description Simple DDNS web based keeping update the main domain type 'A' with the current host WAN IP
  * @author      Tomas Aparicio <tomas@rijndael-project.com>
  * @license     GNU GPL 3.0
- * @version     0.1.2 beta revision 16
+ * @version     0.1.3 beta revision 20
  * @see         README.md for how to usage
  * @api		https://visualdns.net/api-documentation
  *
@@ -35,9 +35,10 @@ $date = date('Y-m-d H:i');
 $IP = 4; // define the IP protocol version - v6 coming soon
 
 // list of domains activated to update
-$domains = array (
-	'example.com',
-	'example.org'
+$ddns = array (
+	'example.com' => array(
+			'home.example.com'
+		),
 	// add more here like array index
 );
 
@@ -88,7 +89,7 @@ try {
                 }
 
                 // init SOAP
-                $client = new SoapClient('https://visualdns.net/api/wsdl', array(
+                $client = new SoapClient('http://visualdns.net/api/wsdl', array(
                         'compression' => SOAP_COMPRESSION_ACCEPT
                 ));
 
@@ -103,8 +104,10 @@ try {
                 foreach ($domains as $i => $value)
                 {
                         $host = $value['name'];
-			// search if should update the current domain @see $domains
-                        if (!array_key_exists($host,$domains)) break;
+			// search if should update the current domain @see $domains 
+			if (!array_key_exists($host,$ddns)) continue; 
+			// get current domain
+			$toUpdate = $ddns[$host];
 
 			// if exists proceed to update
 			sleep(1);
@@ -119,28 +122,27 @@ try {
 
                         foreach ($records as $x => $name)
                         {
+				// check exists
+				if (!in_array(trim($name['name']),$toUpdate)) continue;
 				// by default only update the A type registry for the literal domain host
 				// improve it according to your needs
-                                if (trim($name['name']) == $host && trim($name['type']) == 'A') {
-                                        $id = (int)$name['id'];
-                                        $type = $name['type'];
-                                        $domain = trim($name['name']);
-                                        break;
-                                }
+                                if (trim($name['type']) == 'A') {
+                                	$id = (int)$name['id'];
+                                	$type = $name['type'];
+                                	$domain = trim($name['name']);
+
+					try {
+						$recordUpdate = $client->editRecord($API, $id, $domain, $type, $current, 3600);
+					} catch (Exception $e) {
+						die($e->getMessage());
+					}
+                                	echo $date . ' - NOTICE : Update done correctly for domain ' . $host . ' with type "' .$type. '" with value "'.$current.'" ' . "\n";
+				}
                         }
 
                         if (empty($id))
                         {
-                                echo $date . ' - ERROR : Cannot find the record value for ' . $host . "\n";
-                        } else {
-                                try {
-                                        //echo (int)$id . ' -> ' . $domain . ' -> ' . $current . ' -> ' . $type ;
-                                        $recordUpdate = $client->editRecord($API, $id, $domain, $type, $current, 3600);
-                                } catch (Exception $e) {
-                                        echo $e->getMessage();
-                                        die();
-                                }
-                                echo $date . ' - NOTICE : Update done correctly for domain ' . $host . ' with type "' .$type. '" with value "'.$current.'" ' . "\n";
+                        	echo $date . ' - ERROR : Cannot find the record value for ' . $host . "\n";
                         }
                 }
         }
@@ -149,4 +151,3 @@ try {
         die ( $date . ' -  ERROR : An script error ocurred. Excepcion Error returned : ' . $e );
 }
 
-?>
