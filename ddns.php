@@ -148,6 +148,6 @@ try {
         }
 
 } catch (Exception $e) {
-        die ( $date . ' -  ERROR : An script error ocurred. Excepcion Error returned : ' . $e );
+        die ( $date . ' -  ERROR : An script error ocurred. Excepcion Error returned : ' . $e->getMessage() );
 }
 
