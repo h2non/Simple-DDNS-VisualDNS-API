@@ -6,7 +6,7 @@
  * @description Simple DDNS web based keeping update the main domain type 'A' with the current host WAN IP
  * @author      Tomas Aparicio <tomas@rijndael-project.com>
  * @license     GNU GPL 3.0
- * @version     0.1.3 beta revision 20
+ * @version     0.1.3 beta revision 22
  * @see         README.md for how to usage
  * @api		https://visualdns.net/api-documentation
  *
