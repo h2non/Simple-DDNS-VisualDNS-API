@@ -136,7 +136,7 @@ try {
 					} catch (Exception $e) {
 						die($e->getMessage());
 					}
-                                	echo $date . ' - NOTICE : Update done correctly for domain ' . $host . ' with type "' .$type. '" with value "'.$current.'" ' . "\n";
+                                	echo $date . ' - NOTICE : Update done correctly for domain "' . $host . '" > "' . $name['name'] . '" with type "' .$type. '" with value "'.$current.'" ' . "\n";
 				}
                         }
 
